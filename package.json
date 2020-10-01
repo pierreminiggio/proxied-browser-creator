@@ -1,0 +1,25 @@
+{
+  "name": "@pierreminiggio/proxied-browser-creator",
+  "version": "1.0.0",
+  "description": "Puppeteer Proxied Browser Creator",
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pierreminiggio/proxied-browser-creator.git"
+  },
+  "author": "Pierre MINIGGIO",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pierreminiggio/proxied-browser-creator/issues"
+  },
+  "homepage": "https://github.com/pierreminiggio/proxied-browser-creator#readme",
+  "dependencies": {
+    "node": "^12.6.0",
+    "node-fetch": "^2.6.1",
+    "puppeteer": "^1.18.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
