@@ -4,11 +4,13 @@ const puppeteer = require('puppeteer')
 let proxies = []
 
 /**
+ * @param {Object} launchParameters
+ * 
  * @returns {Promise<import('puppeteer').Browser>}
  */
-const findBrowser = async () => {
+const findBrowser = async (launchParameters = {}) => {
     return new Promise(async resolve => {
-        const browser = await letsGoWithProxies()
+        const browser = await letsGoWithProxies(launchParameters)
         resolve(browser)
     })
 }
@@ -27,14 +29,13 @@ async function fetchProxies() {
 }
 
 /**
+ * @param {Object} launchParameters
  * @param {?string} proxy 
- * @param {boolean} show 
  * 
  * @returns {Promise<Browser>}
  */
-async function createBrowser(proxy, show) {
+async function createBrowser(launchParameters, proxy) {
     return new Promise(async (resolve, rejects) => {
-        let launchParameters = {headless: ! show}
         if (proxy) {
             launchParameters.args = ['--proxy-server=socks5://' + proxy]
         }
@@ -47,11 +48,11 @@ async function createBrowser(proxy, show) {
 }
 
 /**
- * @param {string[]} proxies
+ * @param {Object} launchParameters
  * 
  * @returns {Promise<import('puppeteer').Browser>} 
  */
-const letsGoWithProxies = async () => {
+const letsGoWithProxies = async (launchParameters) => {
     if (! proxies.length) {
         proxies = await fetchProxies()
     }
@@ -59,7 +60,7 @@ const letsGoWithProxies = async () => {
         const id = Math.floor(Math.random() * proxies.length)
         const proxy = proxies[id]
         console.log('Test de ' + proxy + ' ...')
-        const browser = await createBrowser(proxy, false)
+        const browser = await createBrowser(launchParameters, proxy)
         const ipCheckerPage = await browser.newPage()
         try {
             await ipCheckerPage.goto('https://api.myip.com')
