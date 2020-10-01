@@ -72,7 +72,7 @@ const letsGoWithProxies = async (launchParameters) => {
             proxies.splice(id, 1)
             console.log('Proxy ' + proxy + ' marche pas :\'(')
             browser.close()
-            letsGoWithProxies()
+            letsGoWithProxies(launchParameters)
         }
     })
 }
