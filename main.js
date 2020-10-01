@@ -59,20 +59,21 @@ const letsGoWithProxies = async (launchParameters) => {
     return new Promise(async resolve => {
         const id = Math.floor(Math.random() * proxies.length)
         const proxy = proxies[id]
-        console.log('Test de ' + proxy + ' ...')
+        console.log('Trying ' + proxy + ' ...')
         const browser = await createBrowser(launchParameters, proxy)
         const ipCheckerPage = await browser.newPage()
         try {
             await ipCheckerPage.goto('https://api.myip.com')
             const bodyHTML = await ipCheckerPage.evaluate(() => document.body.innerHTML)
             console.log(JSON.parse(bodyHTML))
-            console.log(proxy + ' MARCHE !!!')
+            console.log(proxy + ' works !!!')
             resolve(browser)
         } catch(e) {
             proxies.splice(id, 1)
-            console.log('Proxy ' + proxy + ' marche pas :\'(')
+            console.log('Proxy ' + proxy + ' not working :\'(')
             browser.close()
-            letsGoWithProxies(launchParameters)
+            const newBrowser = await letsGoWithProxies(launchParameters)
+            resolve(newBrowser)
         }
     })
 }
