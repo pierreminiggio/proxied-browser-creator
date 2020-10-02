@@ -59,6 +59,7 @@ const letsGoWithProxies = async (launchParameters) => {
     return new Promise(async resolve => {
         const id = Math.floor(Math.random() * proxies.length)
         const proxy = proxies[id]
+        proxies.splice(id, 1)
         console.log('Trying ' + proxy + ' ...')
         const browser = await createBrowser(launchParameters, proxy)
         const ipCheckerPage = await browser.newPage()
@@ -69,7 +70,6 @@ const letsGoWithProxies = async (launchParameters) => {
             console.log(proxy + ' works !!!')
             resolve(browser)
         } catch(e) {
-            proxies.splice(id, 1)
             console.log('Proxy ' + proxy + ' not working :\'(')
             browser.close()
             const newBrowser = await letsGoWithProxies(launchParameters)
